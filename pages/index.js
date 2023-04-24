@@ -1,9 +1,8 @@
 //react
 import { useEffect, useRef } from 'react';
-//next
-import Image from 'next/image';
 //style
 import styles from '../styles/index.module.css';
+import ChatGPT from '../public/images/chatGPT';
 //3rd p lib imports
 import { toast as toaster } from 'react-toastify';
 //component
@@ -63,14 +62,7 @@ export default function Home() {
           styles.headerBasics
         }`}
       >
-        <Image
-          src="/images/chatGPT.svg"
-          width={45}
-          height={45}
-          className={styles.icon}
-          alt="openai logo"
-          priority
-        />
+        <ChatGPT />
         <h3>OpenAi chatgpt</h3>
       </section>
       <div className={messages.length ? styles.resultCont : ''}>

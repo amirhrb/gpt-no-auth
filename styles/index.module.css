@@ -52,6 +52,7 @@
 }
 .main .icon {
   width: auto;
+  /* fill: rgb(var(--background-rgb)); */
 }
 .main h3 {
   font-size: 1.6rem;
@@ -220,8 +221,10 @@
   text-shadow: none !important;
   color: #8e8ea0 !important;
   border-radius: 10px;
-  padding: 5px;
   font-weight: normal;
+}
+.result pre {
+  width: 95%;
 }
 .result section span {
   background-color: #121212 !important;
