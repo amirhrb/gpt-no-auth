@@ -1,6 +1,6 @@
 //styles
 import Head from 'next/head';
-import styles from '../helper/styles/index.module.css';
+import styles from '../styles/index.module.css';
 
 //fns
 import Image from 'next/image';
