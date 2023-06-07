@@ -6,13 +6,7 @@ const withPWA = require('next-pwa')({
 
 module.exports = withPWA({
   output: 'standalone',
-  async redirects() {
-    return [
-      {
-        source: '/chat',
-        destination: '/',
-        permanent: true,
-      },
-    ];
+  images: {
+    domains: ['oaidalleapiprodscus.blob.core.windows.net'],
   },
 });

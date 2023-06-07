@@ -11,28 +11,24 @@ export default async function handler(req, res) {
   });
   const openai = new OpenAIApi(configuration);
 
-  const messages = req.body.messages || '';
-  if (messages.length === 0) {
+  const prompt = req.body.prompt || '';
+  if (prompt.length === 0) {
     return res.status(400).json({
       status: 'failure',
-      message: 'یک سوال بپرسید',
+      error: {
+        message: 'یک متن برای تولید عکس بنویسید',
+      },
     });
   }
   try {
-    const completion = await openai.createChatCompletion({
-      model: 'gpt-3.5-turbo',
-      messages: [
-        {
-          role: 'system',
-          content:
-            'please always put all codes in markdown format that matches the code language',
-        },
-        ...messages,
-      ],
+    const imageData = await openai.createImage({
+      prompt,
+      n: 1,
+      size: '512x512',
     });
     res.status(200).json({
-      result: completion.data.choices[0].message,
-      question: messages[messages.length - 1],
+      status: 'success',
+      url: imageData.data.data[0].url,
     });
   } catch (error) {
     // Consider adjusting the error handling logic for your use case
@@ -41,7 +37,9 @@ export default async function handler(req, res) {
     } else {
       res.status(500).json({
         status: 'failure',
-        message: 'An error occurred during your request.',
+        error: {
+          message: 'خطایی در درخواست رخ داده',
+        },
       });
     }
   }
