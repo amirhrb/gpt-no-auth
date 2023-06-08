@@ -53,7 +53,7 @@ export default function Image() {
 
   return (
     <>
-      <div className="flex  items-center justify-center fixed top-0 left-0  bg-opacity-20 backdrop-blur-sm w-full p-2 z-10">
+      <div className="flex items-center justify-center fixed top-0 left-0  bg-opacity-20 backdrop-blur-sm w-full p-2 z-10">
         <div className="flex items-center justify-between flex-row-reverse w-full max-w-3xl">
           <div className="flex items-center gap-x-2 flex-row-reverse">
             <ChatGPT />
@@ -67,7 +67,7 @@ export default function Image() {
               OpenAI
             </h3>
           </div>
-          {interacts.length && (
+          {!!interacts.length && (
             <h1
               className={`font-colfax
              text-gray-900 dark:text-gray-50 
@@ -135,7 +135,6 @@ export default function Image() {
               dark:bg-neutral-600 
               border-neutral-300
               dark:border-neutral-600"
-
               // ${messages.length ? '' : ''}
             />
             <button
