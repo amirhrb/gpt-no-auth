@@ -7,28 +7,48 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import styles from '../styles/index.module.css';
 import { toast } from 'react-hot-toast';
 
-const Response = ({ message }) => {
+const Response = ({ message: { content, role, status } }) => {
   const copyText = () => {
     navigator.clipboard
-      .writeText(message.content)
+      .writeText(content)
       .then(() => toast.success('کپی شد', { className: 'font-yekan' }))
-      .catch((err) =>
-        toast.success('مشکلی پیش آمده', { className: 'font-yekan' })
-      );
+      .catch(() => toast.error('مشکلی پیش آمده', { className: 'font-yekan' }));
   };
-  if (message) {
+  if (role || content) {
     return (
       <article
-        className={` bg-opacity-80 w-[85%] rounded-xl p-4 mt-4 animate-appear ${
-          message.role !== 'user'
+        className={` bg-opacity-80 w-[85%] rounded-xl px-4 pt-4 mt-4 animate-appear ${
+          role !== 'user'
             ? 'bg-primary text-neutral-50 self-end'
             : 'bg-neutral-300 dark:bg-neutral-600 text-neutral-900 dark:text-neutral-50'
         }`}
-        dir={/[\u0591-\u07FF]/.test(message.content) ? 'rtl' : 'ltr'}
+        dir={/[\u0591-\u07FF]/.test(content) ? 'rtl' : 'ltr'}
       >
-        <h4 className="mb-1 font-extrabold leading-8 text-lg select-none">
-          {message.role === 'user' ? 'YOU' : 'GPT'}
-        </h4>
+        {status === 'error' ? (
+          <div className="flex">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              className="w-6 h-6 text-rose-700"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
+              />
+            </svg>
+            <h4 className={`mb-1 font-extrabold leading-8 text-lg select-none`}>
+              {role === 'user' ? 'YOU' : 'GPT'}
+            </h4>
+          </div>
+        ) : (
+          <h4 className={`mb-1 font-extrabold leading-8 text-lg select-none`}>
+            {role === 'user' ? 'YOU' : 'GPT'}
+          </h4>
+        )}
         <div className={`${styles.result}`}>
           <ReactMarkdown
             components={{
@@ -54,24 +74,28 @@ const Response = ({ message }) => {
               },
             }}
           >
-            {message.content}
+            {content}
           </ReactMarkdown>
-          <button onClick={copyText} className="mt-4">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z"
-              />
-            </svg>
-          </button>
+          {navigator.clipboard && navigator.clipboard.writeText ? (
+            <button onClick={copyText} className="mt-4">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5A3.375 3.375 0 006.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0015 2.25h-1.5a2.251 2.251 0 00-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 00-9-9z"
+                />
+              </svg>
+            </button>
+          ) : (
+            ''
+          )}
         </div>
       </article>
     );

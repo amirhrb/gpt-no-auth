@@ -11,7 +11,13 @@ export default async function handler(req, res) {
   });
   const openai = new OpenAIApi(configuration);
 
-  const messages = req.body.messages || '';
+  const messages =
+    req.body.messages.map((message) => {
+      return {
+        role: message.role,
+        content: message.content,
+      };
+    }) || '';
   if (messages.length === 0) {
     return res.status(400).json({
       status: 'failure',

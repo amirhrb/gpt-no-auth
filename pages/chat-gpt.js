@@ -37,6 +37,7 @@ export default function Chat() {
   }, [messages, inProcess]);
 
   async function submitHandler(event) {
+    console.log(messages);
     event.preventDefault();
     if (inputRef.current) {
       if (!inputRef.current.value) {

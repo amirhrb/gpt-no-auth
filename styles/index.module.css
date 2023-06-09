@@ -1,5 +1,6 @@
 .result {
   display: inline-block;
+  overflow: auto;
   max-width: 100%;
   font-weight: bold;
 }
@@ -30,6 +31,7 @@
   width: 100%;
 }
 .result section code span {
+  background: rgb(23 23 23) !important;
   font-size: 0.8rem;
   font-weight: bold;
 }
