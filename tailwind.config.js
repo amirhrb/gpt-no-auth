@@ -26,9 +26,14 @@ module.exports = {
             transform: 'translateY(0) scale(1)',
           },
         },
+        typing: {
+          '0%': 'width: 0',
+          '100%': 'width: 100%',
+        },
       },
       animation: {
         appear: 'appear 0.2s',
+        typing: 'typing 4s steps(40, end)',
       },
     },
   },

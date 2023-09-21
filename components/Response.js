@@ -7,7 +7,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import styles from '../styles/index.module.css';
 import { toast } from 'react-hot-toast';
 
-const Response = ({ message: { content, role, status } }) => {
+const Response = ({ message: { content, role, status, animated } }) => {
   const copyText = () => {
     navigator.clipboard
       .writeText(content)
