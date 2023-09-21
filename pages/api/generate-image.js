@@ -1,5 +1,5 @@
 import { Configuration, OpenAIApi } from 'openai';
-
+const userId = `user_${Math.random() * 100}`;
 export default async function handler(req, res) {
   if (req.method !== 'POST')
     return res
@@ -21,11 +21,15 @@ export default async function handler(req, res) {
     });
   }
   try {
-    const imageData = await openai.createImage({
-      prompt,
-      n: 1,
-      size: '512x512',
-    });
+    const imageData = await openai.createImage(
+      {
+        prompt,
+        n: 1,
+        size: '512x512',
+        user: userId,
+      },
+      { headers: { 'Access-Control-Allow-Origin': '*' } }
+    );
     res.status(200).json({
       status: 'success',
       url: imageData.data.data[0].url,

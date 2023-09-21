@@ -1,3 +1,4 @@
+import Link from 'next/link';
 //react
 import { useEffect, useRef } from 'react';
 //style
@@ -14,7 +15,7 @@ import useChatStore from '../lib/store/chatStore';
 
 export default function Chat() {
   const { messages, inProcess, sendMessage, toast } = useChatStore(
-    (state) => state
+    state => state
   );
 
   const inputRef = useRef();
@@ -57,16 +58,20 @@ export default function Chat() {
       <div className="flex items-center justify-center fixed top-0 left-0  bg-opacity-20 backdrop-blur-sm w-full p-2 z-10">
         <div className="flex items-center justify-between flex-row-reverse w-full max-w-3xl">
           <div className="flex items-center gap-x-2 flex-row-reverse">
-            <ChatGPT />
-            <h3
-              className="
-            font-colfax text-gray-900 dark:text-gray-50 
-            text-lg
-            font-bold
-            "
-            >
-              OpenAI
-            </h3>
+            <Link href="/">
+              <ChatGPT />
+            </Link>
+            <Link href="/">
+              <h3
+                className="
+              font-colfax text-gray-900 dark:text-gray-50 
+              text-lg
+              font-bold
+              "
+              >
+                OpenAI
+              </h3>
+            </Link>
           </div>
           {!!messages.length && (
             <h1

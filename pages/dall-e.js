@@ -11,10 +11,11 @@ import toaster from 'react-hot-toast';
 import ImageResponse from '../components/ImageResponse';
 //zustand store
 import useImageStore from '../lib/store/imageStore';
+import Link from 'next/link';
 
 export default function Image() {
   const { interacts, inProcess, sendPrompt, toast } = useImageStore(
-    (state) => state
+    state => state
   );
 
   const inputRef = useRef();
@@ -56,25 +57,29 @@ export default function Image() {
       <div className="flex items-center justify-center fixed top-0 left-0  bg-opacity-20 backdrop-blur-sm w-full p-2 z-10">
         <div className="flex items-center justify-between flex-row-reverse w-full max-w-3xl">
           <div className="flex items-center gap-x-2 flex-row-reverse">
-            <ChatGPT />
-            <h3
-              className={`
+            <Link href="/">
+              <ChatGPT />
+            </Link>
+            <Link href="/">
+              <h3
+                className="
             font-colfax text-gray-900 dark:text-gray-50 
             text-lg
             font-bold
-            `}
-            >
-              OpenAI
-            </h3>
+            "
+              >
+                OpenAI
+              </h3>
+            </Link>
           </div>
           {!!interacts.length && (
             <h1
-              className={`font-colfax
+              className="font-colfax
              text-gray-900 dark:text-gray-50 
              text-lg
              font-bold animate-appear
              transition-all duration-100
-         `}
+         "
             >
               DALL·E 2
             </h1>

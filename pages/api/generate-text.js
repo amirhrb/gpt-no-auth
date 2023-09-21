@@ -1,6 +1,7 @@
 import { Configuration, OpenAIApi } from 'openai';
 
 export default async function handler(req, res) {
+  console.log('offline!');
   if (req.method !== 'POST')
     return res
       .status(403)
@@ -12,7 +13,7 @@ export default async function handler(req, res) {
   const openai = new OpenAIApi(configuration);
 
   const messages =
-    req.body.messages.map((message) => {
+    req.body.messages.map(message => {
       return {
         role: message.role,
         content: message.content,
@@ -38,7 +39,6 @@ export default async function handler(req, res) {
         ...messages,
       ],
     });
-    console.log(completion.data.choices[0].message);
     res.status(200).json({
       status: 'success',
       result: completion.data.choices[0].message,
